@@ -21,7 +21,7 @@ Supported version (grch37, grch38)
 ## Run
 
 ```
-spliceai_rocksdb -I input.[csv, parquet, vcf] -O output.vcf -R genome.fa -A grch37 -db {db_path}
+spliceai_rocksdb -I input.vcf -O output.[csv, parquet, vcf] -R genome.fa -A grch37 -db {db_path}
 ```
 
 ## Create Database
