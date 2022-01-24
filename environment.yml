@@ -1,0 +1,12 @@
+name: spliceai-rocksdb
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python>=3.6
+  - rocksdb>=6.10.2
+  - tensorflow-gpu>=2.4
+  - cudnn
+  - cudatoolkit>=11.0
+  - pip
+  - snakemake>=6.1

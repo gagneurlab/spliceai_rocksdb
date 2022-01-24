@@ -1,0 +1,38 @@
+configfile: "config.yaml"
+
+
+rule all:
+    input:
+        expand(config['rockdb_backup'], genome=['grch37', 'grch38'])
+
+
+def precomputed_snv_vcf(wildcards):
+    genome = wildcards['genome']
+    return config['precomputed'][genome]['snv']
+
+
+def precomputed_indel_vcf(wildcards):
+    genome = wildcards['genome']
+    return config['precomputed'][genome]['indel']
+
+
+rule create_spliceAI_rocksDB:
+    input:
+        snv = precomputed_snv_vcf,
+        indel = precomputed_indel_vcf
+    params:
+        batch_size = config['batch_size']
+    output:
+        db = directory(config['rocksdb'])
+    script:
+        "./scripts/create_rocksdb.py"
+
+
+rule backup_rocksdb:
+    input:
+        db = config['rocksdb']
+    output:
+        backup = directory(config['rockdb_backup']),
+        backup_gzip = config['rockdb_backup'] + '.tar.gz'
+    script:
+        "./scripts/backup_rocksdb.py"

@@ -1,0 +1,95 @@
+2021/04/01-06:43:36.997409 7f360880a740 RocksDB version: 6.10.2
+2021/04/01-06:43:36.997480 7f360880a740 Git sha rocksdb_build_git_sha:@0@
+2021/04/01-06:43:36.997487 7f360880a740 Compile date Jun 11 2020
+2021/04/01-06:43:36.997492 7f360880a740 DB SUMMARY
+2021/04/01-06:43:36.997692 7f360880a740 SST files in tests/data/spliceAI.db dir, Total Num: 0, files: 
+2021/04/01-06:43:36.997698 7f360880a740 Write Ahead Log file in tests/data/spliceAI.db: 
+2021/04/01-06:43:36.997700 7f360880a740                         Options.error_if_exists: 0
+2021/04/01-06:43:36.997703 7f360880a740                       Options.create_if_missing: 1
+2021/04/01-06:43:36.997705 7f360880a740                         Options.paranoid_checks: 1
+2021/04/01-06:43:36.997707 7f360880a740                                     Options.env: 0x7f33dcfc9fc0
+2021/04/01-06:43:36.997709 7f360880a740                                      Options.fs: Posix File System
+2021/04/01-06:43:36.997712 7f360880a740                                Options.info_log: 0x55d405474890
+2021/04/01-06:43:36.997714 7f360880a740                Options.max_file_opening_threads: 16
+2021/04/01-06:43:36.997716 7f360880a740                              Options.statistics: (nil)
+2021/04/01-06:43:36.997718 7f360880a740                               Options.use_fsync: 0
+2021/04/01-06:43:36.997720 7f360880a740                       Options.max_log_file_size: 0
+2021/04/01-06:43:36.997722 7f360880a740                  Options.max_manifest_file_size: 1073741824
+2021/04/01-06:43:36.997724 7f360880a740                   Options.log_file_time_to_roll: 0
+2021/04/01-06:43:36.997726 7f360880a740                       Options.keep_log_file_num: 1000
+2021/04/01-06:43:36.997728 7f360880a740                    Options.recycle_log_file_num: 0
+2021/04/01-06:43:36.997730 7f360880a740                         Options.allow_fallocate: 1
+2021/04/01-06:43:36.997732 7f360880a740                        Options.allow_mmap_reads: 0
+2021/04/01-06:43:36.997734 7f360880a740                       Options.allow_mmap_writes: 0
+2021/04/01-06:43:36.997736 7f360880a740                        Options.use_direct_reads: 0
+2021/04/01-06:43:36.997738 7f360880a740                        Options.use_direct_io_for_flush_and_compaction: 0
+2021/04/01-06:43:36.997740 7f360880a740          Options.create_missing_column_families: 0
+2021/04/01-06:43:36.997742 7f360880a740                              Options.db_log_dir: 
+2021/04/01-06:43:36.997744 7f360880a740                                 Options.wal_dir: tests/data/spliceAI.db
+2021/04/01-06:43:36.997746 7f360880a740                Options.table_cache_numshardbits: 6
+2021/04/01-06:43:36.997748 7f360880a740                      Options.max_subcompactions: 1
+2021/04/01-06:43:36.997750 7f360880a740                         Options.WAL_ttl_seconds: 0
+2021/04/01-06:43:36.997751 7f360880a740                       Options.WAL_size_limit_MB: 0
+2021/04/01-06:43:36.997753 7f360880a740                        Options.max_write_batch_group_size_bytes: 1048576
+2021/04/01-06:43:36.997755 7f360880a740             Options.manifest_preallocation_size: 4194304
+2021/04/01-06:43:36.997757 7f360880a740                     Options.is_fd_close_on_exec: 1
+2021/04/01-06:43:36.997759 7f360880a740                   Options.advise_random_on_open: 1
+2021/04/01-06:43:36.997761 7f360880a740                    Options.db_write_buffer_size: 0
+2021/04/01-06:43:36.997763 7f360880a740                    Options.write_buffer_manager: 0x55d3fe7620a0
+2021/04/01-06:43:36.997765 7f360880a740         Options.access_hint_on_compaction_start: 1
+2021/04/01-06:43:36.997767 7f360880a740  Options.new_table_reader_for_compaction_inputs: 0
+2021/04/01-06:43:36.997769 7f360880a740           Options.random_access_max_buffer_size: 1048576
+2021/04/01-06:43:36.997770 7f360880a740                      Options.use_adaptive_mutex: 0
+2021/04/01-06:43:36.997772 7f360880a740                            Options.rate_limiter: (nil)
+2021/04/01-06:43:36.997775 7f360880a740     Options.sst_file_manager.rate_bytes_per_sec: 0
+2021/04/01-06:43:36.997777 7f360880a740                       Options.wal_recovery_mode: 2
+2021/04/01-06:43:36.997779 7f360880a740                  Options.enable_thread_tracking: 0
+2021/04/01-06:43:36.997785 7f360880a740                  Options.enable_pipelined_write: 0
+2021/04/01-06:43:36.997787 7f360880a740                  Options.unordered_write: 0
+2021/04/01-06:43:36.997789 7f360880a740         Options.allow_concurrent_memtable_write: 1
+2021/04/01-06:43:36.997790 7f360880a740      Options.enable_write_thread_adaptive_yield: 1
+2021/04/01-06:43:36.997792 7f360880a740             Options.write_thread_max_yield_usec: 100
+2021/04/01-06:43:36.997795 7f360880a740            Options.write_thread_slow_yield_usec: 3
+2021/04/01-06:43:36.997796 7f360880a740                               Options.row_cache: None
+2021/04/01-06:43:36.997798 7f360880a740                              Options.wal_filter: None
+2021/04/01-06:43:36.997801 7f360880a740             Options.avoid_flush_during_recovery: 0
+2021/04/01-06:43:36.997802 7f360880a740             Options.allow_ingest_behind: 0
+2021/04/01-06:43:36.997805 7f360880a740             Options.preserve_deletes: 0
+2021/04/01-06:43:36.997807 7f360880a740             Options.two_write_queues: 0
+2021/04/01-06:43:36.997808 7f360880a740             Options.manual_wal_flush: 0
+2021/04/01-06:43:36.997811 7f360880a740             Options.atomic_flush: 0
+2021/04/01-06:43:36.997812 7f360880a740             Options.avoid_unnecessary_blocking_io: 0
+2021/04/01-06:43:36.997814 7f360880a740                 Options.persist_stats_to_disk: 0
+2021/04/01-06:43:36.997817 7f360880a740                 Options.write_dbid_to_manifest: 0
+2021/04/01-06:43:36.997819 7f360880a740                 Options.log_readahead_size: 0
+2021/04/01-06:43:36.997821 7f360880a740                 Options.file_checksum_gen_factory: Unknown
+2021/04/01-06:43:36.997823 7f360880a740                 Options.best_efforts_recovery: 0
+2021/04/01-06:43:36.997825 7f360880a740             Options.max_background_jobs: 2
+2021/04/01-06:43:36.997827 7f360880a740             Options.max_background_compactions: -1
+2021/04/01-06:43:36.997829 7f360880a740             Options.avoid_flush_during_shutdown: 0
+2021/04/01-06:43:36.997831 7f360880a740           Options.writable_file_max_buffer_size: 1048576
+2021/04/01-06:43:36.997832 7f360880a740             Options.delayed_write_rate : 16777216
+2021/04/01-06:43:36.997834 7f360880a740             Options.max_total_wal_size: 0
+2021/04/01-06:43:36.997836 7f360880a740             Options.delete_obsolete_files_period_micros: 21600000000
+2021/04/01-06:43:36.997839 7f360880a740                   Options.stats_dump_period_sec: 600
+2021/04/01-06:43:36.997841 7f360880a740                 Options.stats_persist_period_sec: 600
+2021/04/01-06:43:36.997843 7f360880a740                 Options.stats_history_buffer_size: 1048576
+2021/04/01-06:43:36.997845 7f360880a740                          Options.max_open_files: -1
+2021/04/01-06:43:36.997847 7f360880a740                          Options.bytes_per_sync: 0
+2021/04/01-06:43:36.997849 7f360880a740                      Options.wal_bytes_per_sync: 0
+2021/04/01-06:43:36.997850 7f360880a740                   Options.strict_bytes_per_sync: 0
+2021/04/01-06:43:36.997852 7f360880a740       Options.compaction_readahead_size: 0
+2021/04/01-06:43:36.997854 7f360880a740                  Options.max_background_flushes: -1
+2021/04/01-06:43:36.997856 7f360880a740 Compression algorithms supported:
+2021/04/01-06:43:36.997858 7f360880a740 	kZSTDNotFinalCompression supported: 1
+2021/04/01-06:43:36.997867 7f360880a740 	kZSTD supported: 1
+2021/04/01-06:43:36.997869 7f360880a740 	kXpressCompression supported: 0
+2021/04/01-06:43:36.997872 7f360880a740 	kLZ4HCCompression supported: 1
+2021/04/01-06:43:36.997874 7f360880a740 	kLZ4Compression supported: 1
+2021/04/01-06:43:36.997876 7f360880a740 	kBZip2Compression supported: 0
+2021/04/01-06:43:36.997879 7f360880a740 	kZlibCompression supported: 0
+2021/04/01-06:43:36.997881 7f360880a740 	kSnappyCompression supported: 1
+2021/04/01-06:43:36.997887 7f360880a740 Fast CRC32 supported: Supported on x86
+2021/04/01-06:43:36.997890 7f360880a740 [db/db_impl/db_impl_readonly.cc:23] Opening the db in read only mode
+2021/04/01-06:43:36.998138 7f360880a740 [db/db_impl/db_impl.cc:401] Shutdown: canceling all background work
+2021/04/01-06:43:36.998171 7f360880a740 [db/db_impl/db_impl.cc:577] Shutdown complete
