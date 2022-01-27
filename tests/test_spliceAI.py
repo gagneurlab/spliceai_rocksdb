@@ -25,8 +25,8 @@ def test_SpliceAI_predict(spliceai):
         gene_name='TAF15', delta_score=0.25,
         acceptor_gain=0.25, acceptor_loss=0.0,
         donor_gain=0.0, donor_loss=0.0,
-        acceptor_gain_position=11.0, acceptor_loss_positiin=29.0,
-        donor_gain_position=11.0, donor_loss_position=33.0)
+        acceptor_gain_position=11, acceptor_loss_position=29,
+        donor_gain_position=11, donor_loss_position=33)
 
     scores = spliceai.predict('17:883700:A>T')
     assert scores == []
@@ -47,7 +47,7 @@ def test_SpliceAI_predict_df(spliceai):
         'donor_gain': [0.0, 0.0],
         'donor_loss': [0.0, 0.0],
         'acceptor_gain_position': [11, 27],
-        'acceptor_loss_positiin': [29, 3],
+        'acceptor_loss_position': [29, 3],
         'donor_gain_position': [11, 30],
         'donor_loss_position': [33, 3]
     }).set_index('variant'))
@@ -80,8 +80,8 @@ def test_SpliceAI_predict_with_db(spliceai_db):
         gene_name='X', delta_score=1.0,
         acceptor_gain=0.07, acceptor_loss=1.0,
         donor_gain=0.0, donor_loss=0.0,
-        acceptor_gain_position=-7.0, acceptor_loss_positiin=-1.0,
-        donor_gain_position=35.0, donor_loss_position=-29.0)
+        acceptor_gain_position=-7, acceptor_loss_position=-1,
+        donor_gain_position=35, donor_loss_position=-29)
 
 
 def test_SpliceAI_predict_on_vcf(spliceai_db, tmp_path):
@@ -92,7 +92,7 @@ def test_SpliceAI_predict_on_vcf(spliceai_db, tmp_path):
     assert df.columns.tolist() == [
         'variant', 'gene_name', 'delta_score', 'acceptor_gain',
         'acceptor_loss', 'donor_gain', 'donor_loss', 'acceptor_gain_position',
-        'acceptor_loss_positiin', 'donor_gain_position', 'donor_loss_position'
+        'acceptor_loss_position', 'donor_gain_position', 'donor_loss_position'
     ]
 
     output_parquet = tmp_path / 'output.parquet'
@@ -102,7 +102,7 @@ def test_SpliceAI_predict_on_vcf(spliceai_db, tmp_path):
     assert df.columns.tolist() == [
         'variant', 'gene_name', 'delta_score', 'acceptor_gain',
         'acceptor_loss', 'donor_gain', 'donor_loss', 'acceptor_gain_position',
-        'acceptor_loss_positiin', 'donor_gain_position', 'donor_loss_position'
+        'acceptor_loss_position', 'donor_gain_position', 'donor_loss_position'
     ]
 
 

@@ -31,6 +31,7 @@ def df_batch_writer_parquet(df_iter, output_dir, batch_size_parquet=100000):
     dfs = list()
     num_rows = 0
 
+    batch_num = 0
     for batch_num, df in enumerate(df_iter):
         dfs.append(df)
         num_rows += df.shape[0]
@@ -118,7 +119,7 @@ class SpliceAI:
                                  'acceptor_gain', 'acceptor_loss',
                                  'donor_gain', 'donor_loss',
                                  'acceptor_gain_position',
-                                 'acceptor_loss_positiin',
+                                 'acceptor_loss_position',
                                  'donor_gain_position',
                                  'donor_loss_position'])
     Record = namedtuple('Record', ['chrom', 'pos', 'ref', 'alts'])
@@ -133,7 +134,7 @@ class SpliceAI:
           mask: mask for 'N'
         """
         assert ((fasta is not None) and (annotation is not None)) \
-            or (db_path is not None)
+               or (db_path is not None)
         self.db_only = fasta is None
         if not self.db_only:
             self.ann = Annotator(fasta, annotation)
@@ -178,7 +179,7 @@ class SpliceAI:
             'acceptor_gain', 'acceptor_loss',
             'donor_gain', 'donor_loss',
             'acceptor_gain_position',
-            'acceptor_loss_positiin',
+            'acceptor_loss_position',
             'donor_gain_position',
             'donor_loss_position'
         ]
@@ -191,7 +192,7 @@ class SpliceAI:
             'donor_gain': 'float64',
             'donor_loss': 'float64',
             'acceptor_gain_position': 'int64',
-            'acceptor_loss_positiin': 'int64',
+            'acceptor_loss_position': 'int64',
             'donor_gain_position': 'int64',
             'donor_loss_position': 'int64',
         }
