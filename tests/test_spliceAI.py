@@ -105,6 +105,16 @@ def test_SpliceAI_predict_on_vcf(spliceai_db, tmp_path):
         'acceptor_loss_position', 'donor_gain_position', 'donor_loss_position'
     ]
 
+    output_vcf = tmp_path / 'output.vcf'
+    spliceai_db.predict_save(multi_vcf_file, output_vcf)
+    import cyvcf2
+    vcf = cyvcf2.VCF(output_vcf)
+    variant = next(vcf)
+    assert 'CA|BRCA1|0.0|0.0|0.0|0.0|0|0|0|0' == variant.INFO.get("SpliceAI")
+    vcf.close()
+
+
+
 
 def test_SpliceAI_predict_db_only(spliceai_rocksdb):
     spliceai = SpliceAI(db_path=spliceai_rocksdb)
