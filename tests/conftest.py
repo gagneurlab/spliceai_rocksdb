@@ -11,7 +11,7 @@ spliceai_snv_vcf_file = 'tests/data/spliceai_snv.vcf'
 
 @pytest.fixture
 def spliceai_snv_vcf(tmp_path):
-    vcf_path = tmp_path / 'snv.vcf.gz'
+    vcf_path = tmp_path / 'snv.vcf'
 
     header = '\n'.join([
         '##fileformat=VCFv4.2',
@@ -20,7 +20,7 @@ def spliceai_snv_vcf(tmp_path):
         '##INFO=<ID=SpliceAI,Number=.,Type=String,Description="SpliceAIv1.3 variant annotation. These include delta scores (DS) and delta positions (DP) for acceptor gain (AG), acceptor loss (AL), donor gain (DG), and donor loss (DL). Format: ALLELE|SYMBOL|DS_AG|DS_AL|DS_DG|DS_DL|DP_AG|DP_AL|DP_DG|DP_DL">',
 
         '\t'.join(['#CHROM', 'POS', 'ID', 'REF',
-                   'ALT', ' QUAL', 'FILTER', 'INFO'])
+                   'ALT', 'QUAL', 'FILTER', 'INFO'])
     ])
 
     writer = Writer.from_string(str(vcf_path), header)

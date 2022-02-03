@@ -26,6 +26,7 @@ header_grch37 = '''##fileformat=VCFv4.2
 ##contig=<ID=X,length=155270560>
 ##contig=<ID=Y,length=59373566>
 ##INFO=<ID=SpliceAI,Number=.,Type=String,Description="SpliceAIv1.3 variant annotation. These include delta scores (DS) and delta positions (DP) for acceptor gain (AG), acceptor loss (AL), donor gain (DG), and donor loss (DL). Format: ALLELE|SYMBOL|DS_AG|DS_AL|DS_DG|DS_DL|DP_AG|DP_AL|DP_DG|DP_DL">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
 '''
 
 
@@ -57,4 +58,5 @@ header_grch38 = '''##fileformat=VCFv4.2
 ##contig=<ID=X,length=156040895>
 ##contig=<ID=Y,length=57227415>
 ##INFO=<ID=SpliceAI,Number=.,Type=String,Description="SpliceAIv1.3 variant annotation. These include delta scores (DS) and delta positions (DP) for acceptor gain (AG), acceptor loss (AL), donor gain (DG), and donor loss (DL). Format: ALLELE|SYMBOL|DS_AG|DS_AL|DS_DG|DS_DL|DP_AG|DP_AL|DP_DG|DP_DL">
+#CHROM	POS	ID	REF	ALT	QUAL	FILTER	INFO
 '''

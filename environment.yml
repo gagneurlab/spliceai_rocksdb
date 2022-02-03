@@ -4,9 +4,17 @@ channels:
   - bioconda
 dependencies:
   - python>=3.6
-  - rocksdb>=6.10.2
+  - python-rocksdb>=0.7
   - tensorflow-gpu>=2.4
   - cudnn
   - cudatoolkit>=11.0
-  - pip
-  - snakemake>=6.1
+  - pyarrow
+  - tqdm
+#  - pip
+#  - snakemake>=6.1
+  - setuptools
+  - click
+  - wget
+  - kipoiseq
+  - spliceai
+  - cyvcf2

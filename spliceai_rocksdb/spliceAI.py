@@ -31,6 +31,7 @@ def df_batch_writer_parquet(df_iter, output_dir, batch_size_parquet=100000):
     dfs = list()
     num_rows = 0
 
+    batch_num = 0
     for batch_num, df in enumerate(df_iter):
         dfs.append(df)
         num_rows += df.shape[0]
@@ -47,8 +48,57 @@ def df_batch_writer_parquet(df_iter, output_dir, batch_size_parquet=100000):
         df_all.to_parquet(part_file, index=False, engine='pyarrow')
 
 
-def df_batch_writer_vcf(df_iter, output):
-    raise NotImplementedError()
+def df_batch_writer_vcf(df_iter, output_path, header):
+    import cyvcf2
+
+    columns = [
+        'alt_acceptor',
+        'alt_acceptorIntron',
+        'alt_donor',
+        'alt_donorIntron',
+        'alt_exon',
+        'delta_logit_psi',
+        'pathogenicity',
+        'ref_acceptor',
+        'ref_acceptorIntron',
+        'ref_donor',
+        'ref_donorIntron',
+        'ref_exon'
+    ]
+
+    # vcf.add_info_to_header({
+    #     'ID': 'SpliceAI',
+    #     'Description': (
+    #         "SpliceAIv1.3 variant annotation. "
+    #         "These include delta scores (DS) and delta positions (DP) for acceptor gain (AG), acceptor loss (AL), "
+    #         "donor gain (DG), and donor loss (DL). "
+    #         "Format: ALLELE|SYMBOL|DS_AG|DS_AL|DS_DG|DS_DL|DP_AG|DP_AL|DP_DG|DP_DL"
+    #     ),
+    #     'Type': 'String',
+    #     'Number': '.'
+    # })
+
+    vcf_writer = cyvcf2.Writer.from_string(str(output_path), header)
+    for batch_df in df_iter:
+        for idx, row in batch_df.iterrows():
+            v = Variant.from_str(row.variant)
+            vcf_variant = vcf_writer.variant_from_string('\t'.join([
+                v.chrom, str(v.pos), '.', v.ref, v.alt, '.', '.', '.'
+            ]))
+            vcf_variant.INFO["SpliceAI"] = "|".join([
+                v.alt, # ALLELE
+                row["gene_name"], # SYMBOL
+                str(row["acceptor_gain"]), # DS_AG
+                str(row["acceptor_loss"]), # DS_AL
+                str(row["donor_gain"]), # DS_DG
+                str(row["donor_loss"]), # DS_DL
+                str(row["acceptor_gain_position"]), # DP_AG
+                str(row["acceptor_loss_position"]), # DP_AL
+                str(row["donor_gain_position"]), # DP_DG
+                str(row["donor_loss_position"]), # DP_DL
+            ])
+            vcf_writer.write_record(vcf_variant)
+    vcf_writer.close()
 
 
 class VariantDB:
@@ -118,7 +168,7 @@ class SpliceAI:
                                  'acceptor_gain', 'acceptor_loss',
                                  'donor_gain', 'donor_loss',
                                  'acceptor_gain_position',
-                                 'acceptor_loss_positiin',
+                                 'acceptor_loss_position',
                                  'donor_gain_position',
                                  'donor_loss_position'])
     Record = namedtuple('Record', ['chrom', 'pos', 'ref', 'alts'])
@@ -133,10 +183,13 @@ class SpliceAI:
           mask: mask for 'N'
         """
         assert ((fasta is not None) and (annotation is not None)) \
-            or (db_path is not None)
+               or (db_path is not None)
         self.db_only = fasta is None
+        self.annotation = str(annotation).lower()
+        if self.annotation not in {"grch37", "grch38"}:
+            raise ValueError(f"Unknown annotation version: '{annotation}'!")
         if not self.db_only:
-            self.ann = Annotator(fasta, annotation)
+            self.annotator = Annotator(fasta, annotation)
         self.dist = dist
         self.mask = mask
         self.db = SpliceAIDB(db_path) if db_path else None
@@ -167,7 +220,7 @@ class SpliceAI:
                     return []
         return [
             self.parse(i)
-            for i in get_delta_scores(record, self.ann,
+            for i in get_delta_scores(record, self.annotator,
                                       self.dist, self.mask)
         ]
 
@@ -178,7 +231,7 @@ class SpliceAI:
             'acceptor_gain', 'acceptor_loss',
             'donor_gain', 'donor_loss',
             'acceptor_gain_position',
-            'acceptor_loss_positiin',
+            'acceptor_loss_position',
             'donor_gain_position',
             'donor_loss_position'
         ]
@@ -191,12 +244,11 @@ class SpliceAI:
             'donor_gain': 'float64',
             'donor_loss': 'float64',
             'acceptor_gain_position': 'int64',
-            'acceptor_loss_positiin': 'int64',
+            'acceptor_loss_position': 'int64',
             'donor_gain_position': 'int64',
             'donor_loss_position': 'int64',
         }
-        return pd.DataFrame(rows, columns=columns).astype(
-            type_dict).set_index('variant')
+        return pd.DataFrame(rows, columns=columns).astype(type_dict).set_index('variant')
 
     def _predict_df(self, variants, vcf=None):
         for v in variants:
@@ -227,7 +279,17 @@ class SpliceAI:
         elif file_ext == '.parquet':
             df_batch_writer_parquet(batches, output_path, batch_size)
         elif file_ext == '.vcf':
-            df_batch_writer_vcf(batches, output_path, batch_size)
+            from spliceai_rocksdb import header
+
+            if self.annotation == "grch37":
+                vcf_header = header.header_grch37
+            elif self.annotation == "grch38":
+                vcf_header = header.header_grch38
+            else:
+                # this part of the code should not be reachable
+                raise ValueError(f"Unknown annotation version: '{self.annotation}'!")
+
+            df_batch_writer_vcf(batches, output_path, header=vcf_header)
         else:
             raise ValueError(
                 'File extension %s is not supported. '
