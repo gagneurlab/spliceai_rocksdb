@@ -1,4 +1,4 @@
-configfile: "config.yaml"
+configfile: "workflow/config.yaml"
 
 
 rule all:

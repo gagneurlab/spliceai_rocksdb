@@ -5,8 +5,7 @@ import tarfile
 from spliceai_rocksdb import SpliceAI
 
 db_url = {
-    # zenodo links in here
-    'grch37': '',
+    'grch37': 'https://nextcloud.in.tum.de/index.php/s/dEDnN8gBEsAbtCq/download',
     'grch38': '',
     '_test': ''
 }
