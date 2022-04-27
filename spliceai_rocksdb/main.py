@@ -6,7 +6,7 @@ from spliceai_rocksdb import SpliceAI
 
 db_url = {
     'grch37': 'https://nextcloud.in.tum.de/index.php/s/dEDnN8gBEsAbtCq/download',
-    'grch38': '',
+    'grch38': 'https://nextcloud.in.tum.de/index.php/s/SzHjFkd9Y6jp3Dk/download',
     '_test': ''
 }
 
