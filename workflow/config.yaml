@@ -1,6 +1,8 @@
 # Download vcfs from https://basespace.illumina.com/s/otSPW8hnhaZR
 # to data/resources/
 
+fasta: data/resources/fa_file
+
 precomputed:
   grch37:
     snv: data/resources/spliceai_scores.masked.indel.hg19.vcf.gz
@@ -9,8 +11,17 @@ precomputed:
     snv: data/resources/spliceai_scores.masked.snv.hg38.vcf.gz
     indel: data/resources/spliceai_scores.masked.indel.hg38.vcf.gz
 
+# genome version grch37 or grch38 
+genome: 'grch37' or 'grch38'
+
+# add your vcf file to here
+vcf: data/resources/vcf_file.vcf
+
+# path of rocksdb for look up for precomputed scores
+
 rocksdb: data/results/spliceAI_{genome}.db/
-rockdb_backup: data/results/backups/spliceAI_rocksdb_{genome}
-  
-# too large batch_size may cause memory error
-batch_size: 10000
+
+rockdb_backup: data/results/backups/spliceAI_rocksdb_{genome}/
+
+# predictions
+result: data/results/spliceAI_{genome}.csv

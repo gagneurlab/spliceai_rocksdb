@@ -1,10 +1,10 @@
-configfile: "workflow/config.yaml"
+configfile: "config.yaml"
 
 
 rule all:
     input:
-        expand(config['rockdb_backup'], genome=['grch37', 'grch38'])
-
+        expand(config['rockdb_backup'], genome=['grch37', 'grch38']), 
+        config['result']
 
 def precomputed_snv_vcf(wildcards):
     genome = wildcards['genome']
@@ -20,8 +20,6 @@ rule create_spliceAI_rocksDB:
     input:
         snv = precomputed_snv_vcf,
         indel = precomputed_indel_vcf
-    params:
-        batch_size = config['batch_size']
     output:
         db = directory(config['rocksdb'])
     script:
@@ -36,3 +34,22 @@ rule backup_rocksdb:
         backup_gzip = config['rockdb_backup'] + '.tar.gz'
     script:
         "./scripts/backup_rocksdb.py"
+
+
+rule predict_spliceAI:
+    threads: 1
+    resources:
+        ntasks = 1,
+        mem_mb = 8000,
+        gpu = 1,
+    input:
+        fasta = config['fasta'],
+        vcf = config['vcf'],
+        db = config['rocksdb']
+    params:
+        lookup_only = False,
+        genome = config['genome']
+    output:
+        csv = config['result']
+    script:
+        "./scripts/predict.py"
