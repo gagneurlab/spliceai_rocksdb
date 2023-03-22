@@ -10,8 +10,8 @@ dependencies:
   - cudatoolkit>=11.0
   - pyarrow
   - tqdm
-#  - pip
-#  - snakemake>=6.1
+  - pip
+  - snakemake>=6.1
   - setuptools
   - click
   - wget

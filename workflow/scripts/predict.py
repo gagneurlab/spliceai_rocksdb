@@ -1,4 +1,4 @@
-from spliceai_pipeline.spliceAI import SpliceAI
+from spliceai_rocksdb.spliceAI import SpliceAI
 
 
 if snakemake.params['lookup_only']:
