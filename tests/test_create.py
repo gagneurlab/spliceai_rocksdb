@@ -1,5 +1,5 @@
 import rocksdb
-from spliceai_pipeline.create import create_spliceai_rocksdb
+from spliceai_rocksdb.create import create_spliceai_rocksdb
 
 
 def test_create_spliceai_rocksdb(tmp_path, spliceai_snv_vcf):

@@ -1,4 +1,4 @@
-name: spliceai-rocksdb
+name: spliceai-rocksdb_test
 channels:
   - conda-forge
   - bioconda

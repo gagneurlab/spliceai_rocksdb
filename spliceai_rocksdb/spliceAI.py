@@ -12,6 +12,7 @@ from kipoiseq.extractors import MultiSampleVCF
 import os
 from pathlib import Path
 import pathlib
+from itertools import chain
 
 
 def df_batch_writer(df_iter, output):
@@ -113,6 +114,23 @@ class VariantDB:
             read_only=True
         )
 
+    # def __init__(self, path):
+    #     self.db = rocksdb.DB(
+    #         path,
+    #         rocksdb.Options(
+    #             create_if_missing=True,
+    #             max_open_files=300,
+    #         ),
+    #         read_only=True
+    #     )
+    #     for root, dirs, files in os.walk(path):
+    #         for file in files:
+    #             with open(os.path.join(root, file), 'rb') as f:
+    #                 data = f.read()
+    #                 key = os.path.join(root, file).encode('utf-8')
+    #                 self.db.put(key, data)
+
+
     @staticmethod
     def _variant_to_byte(variant):
         return bytes(str(variant), 'utf-8')
@@ -186,13 +204,15 @@ class SpliceAI:
                or (db_path is not None)
         self.db_only = fasta is None
         self.annotation = str(annotation).lower()
-        if self.annotation not in {"grch37", "grch38"}:
+        if self.annotation not in {"grch37", "grch38", "hg19", "hg38"}:
             raise ValueError(f"Unknown annotation version: '{annotation}'!")
         if not self.db_only:
             self.annotator = Annotator(fasta, annotation)
         self.dist = dist
         self.mask = mask
-        self.db = SpliceAIDB(db_path) if db_path else None
+        self.db = {} if db_path else None
+        for i in range(1, 23):
+            self.db[i] = SpliceAIDB(f"{db_path[:43]}{i}.db/")
 
     @staticmethod
     def _to_record(variant):
@@ -214,7 +234,7 @@ class SpliceAI:
         record = self._to_record(variant)
         if self.db:
             try:
-                return self.db[str(variant)]
+                return self.db[record[0]][str(variant)]
             except KeyError:
                 if self.db_only:
                     return []

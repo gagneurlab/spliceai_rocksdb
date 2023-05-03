@@ -1,5 +1,5 @@
 from click.testing import CliRunner
-from spliceai_rocksdb import SpliceAIDB
+from spliceai_rocksdb.spliceAI import SpliceAIDB
 from spliceai_rocksdb.main import spliceai_rocksdb_download
 
 
