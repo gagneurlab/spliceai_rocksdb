@@ -63,6 +63,10 @@ db_url = {
  		'X': ['doi:10.5281/zenodo.7928552/spliceAI_rocksdb_hg38_chrX.tar.gz', 'md5:a915558ca341f44c1b8ad44198423e9b'],
  		'Y': ['doi:10.5281/zenodo.7928556/spliceAI_rocksdb_hg38_chrY.tar.gz', 'md5:c3e8b0404dad1abdeeb259e2288595ec']
         },
+    'test_AbSplice': {
+	    '1': ['doi:10.5281/zenodo.7990703/SpliceAI_rocksdb_hg19_test_chr1.tar.gz', 'md5:803e44d671d89eb17590e85524719669'],
+	    '2': ['doi:10.5281/zenodo.7990703/SpliceAI_rocksdb_hg19_test_chr2.tar.gz', 'md5:a2fedb977c7d7ee1747e4c408027044c']
+        }
     '_test': '',
 }
 
