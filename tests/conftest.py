@@ -4,12 +4,8 @@ from cyvcf2 import Writer
 from kipoiseq.extractors import MultiSampleVCF
 
 
-fasta_file = 'tests/data/hg19.nochr.chr17.fa'
-multi_vcf_file = 'tests/data/multi_test.vcf.gz'
-# spliceai_snv_vcf_file_chr1 = 'tests/data/spliceai_snv_chr1.vcf'
-# spliceai_snv_vcf_file_chr9 = 'tests/data/spliceai_snv_chr9.vcf'
-# spliceai_rocksdb_chr1_prec = 'tests/data/spliceAI_chr1.db/'
-# spliceai_rocksdb_chr9_prec = 'tests/data/spliceAI_chr9.db/'
+fasta_file = 'data/hg19.nochr.chr17.fa'
+multi_vcf_file = 'data/multi_test.vcf.gz'
 
 
 @pytest.fixture

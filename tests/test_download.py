@@ -14,7 +14,7 @@ def tests_download_spliceai_rocksdb(tmp_path):
     it.seek_to_first()
     download_variants = list(it)
 
-    db = SpliceAIDB('tests/data/SpliceAI_rocksdb_hg19_test_chr1')
+    db = SpliceAIDB('data/SpliceAI_rocksdb_hg19_test_chr1')
     it = db.db.iterkeys()
     it.seek_to_first()
     variant = list(it)

@@ -2,7 +2,7 @@ import pytest
 import pandas as pd
 import rocksdb
 from spliceai_rocksdb.spliceAI import SpliceAI
-from conftest import fasta_file, multi_vcf_file#, spliceai_rocksdb_chr1_prec, spliceai_rocksdb_chr9_prec
+from conftest import fasta_file, multi_vcf_file
 
 
 @pytest.fixture
