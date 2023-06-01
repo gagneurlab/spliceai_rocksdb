@@ -1,12 +1,11 @@
 import rocksdb
 from spliceai_rocksdb.create import create_spliceai_rocksdb
-from conftest import spliceai_snv_vcf_file_chr1, spliceai_snv_vcf_file_chr9
 
-def test_chr1_create_spliceai_rocksdb():
+def test_chr1_create_spliceai_rocksdb(spliceai_snv_vcf_chr1):
     db_path = "tests/data/spliceAI_chr1.db/"
 
-    create_spliceai_rocksdb(db_path, [spliceai_snv_vcf_file_chr1], batch_size=2)
-
+    create_spliceai_rocksdb(db_path, [spliceai_snv_vcf_chr1], batch_size=2)
+    
     db = rocksdb.DB(
         db_path,
         rocksdb.Options(
@@ -18,10 +17,10 @@ def test_chr1_create_spliceai_rocksdb():
 
     
 
-def test_chr9_create_spliceai_rocksdb():
+def test_chr9_create_spliceai_rocksdb(spliceai_snv_vcf_chr9):
     db_path = "tests/data/spliceAI_chr9.db/"
 
-    create_spliceai_rocksdb(db_path, [spliceai_snv_vcf_file_chr9], batch_size=2)
+    create_spliceai_rocksdb(db_path, [spliceai_snv_vcf_chr9], batch_size=2)
 
     db = rocksdb.DB(
         db_path,

@@ -63,7 +63,10 @@ db_url = {
  		'X': ['doi:10.5281/zenodo.7928552/spliceAI_rocksdb_hg38_chrX.tar.gz', 'md5:a915558ca341f44c1b8ad44198423e9b'],
  		'Y': ['doi:10.5281/zenodo.7928556/spliceAI_rocksdb_hg38_chrY.tar.gz', 'md5:c3e8b0404dad1abdeeb259e2288595ec']
         },
-    '_test': '',
+    '_test': {
+        '1': ['doi:10.5281/zenodo.7990703/SpliceAI_rocksdb_hg19_test_chr1.tar.gz', 'md5:803e44d671d89eb17590e85524719669'],
+        '2': ['doi:10.5281/zenodo.7990703/SpliceAI_rocksdb_hg19_test_chr2.tar.gz', 'md5:a2fedb977c7d7ee1747e4c408027044c']
+	}
 }
 
 @click.command()
@@ -80,7 +83,8 @@ def spliceai_rocksdb_download(version, db_path, chromosome):
 
     print('Downloading database...')
     download_path = db_path + '_backup.tar.gz'
-    fname = pooch.retrieve(
+
+    filename = pooch.retrieve(
         url=db_url[version][chromosome][0],
         known_hash=db_url[version][chromosome][1],
         fname=download_path.split('/')[-1],
