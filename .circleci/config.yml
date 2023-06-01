@@ -1,0 +1,28 @@
+version: 2.1
+jobs:
+  build:
+    docker:
+      - image: condaforge/mambaforge:latest
+    steps:
+      - checkout
+      - run:
+          name: Install essential build tools
+          command: |
+            apt-get update
+            apt-get install -y build-essential
+      - run:
+          name: Create environment for spliceai_rocksdb
+          command: |
+            mamba env create -f environment.yml
+            source activate spliceai-rocksdb
+            pip install -e .
+      - run:
+          name: Run tests
+          command: |
+            source activate spliceai-rocksdb
+            pytest tests/
+workflows:
+  version: 2
+  build-and-test:
+    jobs:
+      - build

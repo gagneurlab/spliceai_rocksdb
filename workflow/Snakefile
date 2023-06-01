@@ -1,10 +1,26 @@
 configfile: "config.yaml"
 
+genome_mapper = {
+    'hg19': 'grch37',
+    'hg38': 'grch38'
+}
+
+genome = config['genome']
 
 rule all:
     input:
-        expand(config['rockdb_backup'], genome=config['genome']), 
-        expand(config['result'], genome=config['genome'])
+        expand(config['rocksdb'],
+            genome = config['genome'], chromosome = config['chromosomes']),
+        expand(config['rocksdb_backup'],
+            genome = config['genome'], chromosome = config['chromosomes']),
+        expand(config['rocksdb_backup'] + '.tar.gz',
+            genome = config['genome'], chromosome = config['chromosomes']),
+        expand(config['result'], genome = config['genome']),
+        expand(config['precomputed']['by_chrom']['indel'],
+            genome = config['genome'], chromosome = config['chromosomes']),
+        expand(config['precomputed']['by_chrom']['snv'],
+            genome = config['genome'], chromosome = config['chromosomes']),
+
 
 rule download_human_fasta:
     params:
@@ -14,10 +30,27 @@ rule download_human_fasta:
     shell:
         "wget -O - {params} | gunzip -c > {output}"
 
+rule split_vcf_indel:
+    input:
+        indel = config['precomputed']['indel']
+    output:
+        indel_by_chr = config['precomputed']['by_chrom']['indel']
+    shell:
+        "bcftools view -O z -o {output.indel_by_chr} {input.indel} --regions {wildcards.chromosome}"
+
+rule split_vcf_snv:
+    input:
+        snv = config['precomputed']['snv']
+    output:
+        snv_by_chr = config['precomputed']['by_chrom']['snv']
+    shell:
+        "bcftools view -O z -o {output.snv_by_chr} {input.snv} --regions {wildcards.chromosome}"
+
+
 rule create_spliceAI_rocksDB:
     input:
-        snv = config['precomputed']['snv'],
-        indel = config['precomputed']['indel']
+        snv = config['precomputed']['by_chrom']['snv'],
+        indel = config['precomputed']['by_chrom']['indel']
     params:
         batch_size = config['batch_size']
     output:
@@ -30,14 +63,20 @@ rule backup_rocksdb:
     input:
         db = config['rocksdb']
     output:
-        backup = directory(config['rockdb_backup']),
-        backup_gzip = config['rockdb_backup'] + '.tar.gz'
+        backup = directory(config['rocksdb_backup']),
+        backup_gzip = config['rocksdb_backup'] + '.tar.gz'
     script:
         "./scripts/backup_rocksdb.py"
 
 def fasta(wildcards):
     genome = wildcards['genome']
     return config['fasta'][genome]['file']
+
+def dict_path(wildcards):
+    paths = {}
+    for chr in config['chromosomes']:
+        paths[chr] = config['rocksdb'].format(genome=wildcards['genome'], chromosome=chr)
+    return paths
 
 rule predict_spliceAI:
     threads: 1
@@ -48,10 +87,12 @@ rule predict_spliceAI:
     input:
         fasta = fasta,
         vcf = config['vcf'],
-        db = config['rocksdb']
+        db = expand(config['rocksdb'], genome=config['genome'],
+            chromosome=config['chromosomes'])
     params:
+        db_path = dict_path,
         lookup_only = False,
-        genome = config['genome']
+        genome = genome_mapper[config['genome']],
     output:
         csv = config['result']
     script:

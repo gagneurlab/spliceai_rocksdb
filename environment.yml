@@ -1,20 +1,20 @@
 name: spliceai-rocksdb
 channels:
   - conda-forge
-  - bioconda
 dependencies:
   - python>=3.6
   - python-rocksdb>=0.7
+  - rocksdb
   - tensorflow-gpu>=2.4
   - cudnn
   - cudatoolkit>=11.0
   - pyarrow
   - tqdm
   - pip
-  - snakemake>=6.1
   - setuptools
   - click
-  - wget
-  - kipoiseq
-  - spliceai
-  - cyvcf2
+  - pooch
+  - bioconda::snakemake>=6.1
+  - bioconda::kipoiseq
+  - bioconda::spliceai
+  - bioconda::cyvcf2
