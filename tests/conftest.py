@@ -4,8 +4,8 @@ from cyvcf2 import Writer
 from kipoiseq.extractors import MultiSampleVCF
 
 
-fasta_file = 'data/hg19.nochr.chr17.fa'
-multi_vcf_file = 'data/multi_test.vcf.gz'
+fasta_file = 'tests/data/hg19.nochr.chr17.fa'
+multi_vcf_file = 'tests/data/multi_test.vcf.gz'
 
 
 @pytest.fixture
