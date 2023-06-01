@@ -5,25 +5,35 @@ fasta:
   hg19:
     url: https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_39/GRCh37_mapping/GRCh37.primary_assembly.genome.fa.gz
     file: data/resources/GRCh37.primary_assembly.genome.fa
+  hg38:
+    url: https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_39/GRCh38.primary_assembly.genome.fa.gz
+    file: data/resources/GRCh38.primary_assembly.genome.fa
 
 precomputed:
   snv: data/resources/spliceai_scores.masked.snv.{genome}.vcf.gz
   indel: data/resources/spliceai_scores.masked.indel.{genome}.vcf.gz
 
+  by_chrom:
+    snv: data/resources/by_chrom/spliceai_scores.masked.snv.{genome}_chr{chromosome}.vcf.gz
+    indel: data/resources/by_chrom/spliceai_scores.masked.indel.{genome}_chr{chromosome}.vcf.gz
+
 # genome version hg19 or hg38 
 genome: hg19
 
 # add your vcf file to here
-vcf: data/resources/test.vcf.gz
+vcf: data/resources/example.vcf
 
 # path of rocksdb for look up for precomputed scores
 
-rocksdb: data/results/spliceAI_{genome}.db/
+rocksdb: data/results/dbs_by_chrom/spliceAI_{genome}_chr{chromosome}.db
 
-rockdb_backup: data/results/backups/spliceAI_rocksdb_{genome}/
+rocksdb_backup: data/results/dbs_by_chrom/backups/spliceAI_rocksdb_{genome}_chr{chromosome}
 
 # predictions
 result: data/results/spliceAI_{genome}.csv
 
 # too large batch_size may cause memory error
 batch_size: 10000
+
+# chromosome names
+chromosomes: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', 'X', 'Y']

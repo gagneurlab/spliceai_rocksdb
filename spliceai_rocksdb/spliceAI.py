@@ -12,6 +12,7 @@ from kipoiseq.extractors import MultiSampleVCF
 import os
 from pathlib import Path
 import pathlib
+from itertools import chain
 
 
 def df_batch_writer(df_iter, output):
@@ -113,6 +114,7 @@ class VariantDB:
             read_only=True
         )
 
+
     @staticmethod
     def _variant_to_byte(variant):
         return bytes(str(variant), 'utf-8')
@@ -192,7 +194,14 @@ class SpliceAI:
             self.annotator = Annotator(fasta, annotation)
         self.dist = dist
         self.mask = mask
-        self.db = SpliceAIDB(db_path) if db_path else None
+        self.db = {} if db_path else None
+        if db_path:
+            for chr in ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', 'X', 'Y']:
+                try:
+                    self.db[chr] = SpliceAIDB(db_path[chr])
+                except KeyError:
+                    print(f"There was no database for chr{chr} provided")
+                    continue
 
     @staticmethod
     def _to_record(variant):
@@ -214,7 +223,9 @@ class SpliceAI:
         record = self._to_record(variant)
         if self.db:
             try:
-                return self.db[str(variant)]
+                if record[0].startswith('chr'):
+                    return self.db[record[0][3:]][str(variant)]
+                return self.db[record[0]][str(variant)]
             except KeyError:
                 if self.db_only:
                     return []
