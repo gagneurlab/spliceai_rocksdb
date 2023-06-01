@@ -13,7 +13,7 @@ jobs:
       - run:
           name: Create environment for spliceai_rocksdb
           command: |
-            mamba env create -f environment.yaml
+            mamba env create -f environment.yml
             source activate spliceai-rocksdb
             pip install -e .
       - run:
